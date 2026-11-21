@@ -1,6 +1,7 @@
 package com.zerovisual.module.impl.hud;
 
 import com.zerovisual.module.Module;
+import com.zerovisual.module.Category;
 import com.zerovisual.setting.NumberSetting;
 
 public class VisualFps extends Module {
