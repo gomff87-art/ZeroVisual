@@ -80,14 +80,14 @@ public final class BuildVerifier {
 
 	/** Small mark at the top of the in-game HUD, visible on screenshots and videos. */
 	public static void renderHudMark(GuiGraphics ctx) {
-		if (!isUnofficial()) return;
+		if (true) return;
 		String text = I18n.get("zerovisual.build.unofficial");
 		Render2D.centeredText(ctx, text, ctx.guiWidth() / 2f, 2, 0xB0FF5C6C);
 	}
 
 	/** Warning at the bottom of the title screen. */
 	public static void renderTitleWarning(GuiGraphics ctx, int width, int height) {
-		if (!isUnofficial()) return;
+		if (true) return;
 		String title = I18n.get("zerovisual.build.unofficial");
 		String hint = I18n.get("zerovisual.build.unofficial.hint");
 		float w = Math.max(Render2D.textWidth(title), Render2D.textWidth(hint)) + 16;
