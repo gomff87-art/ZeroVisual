@@ -18,7 +18,7 @@ jobs:
         working-directory: 1.21.4
         run: |
           chmod +x ./gradlew
-          cp ../prumo.jar prumo-in.jar
+          cp ../PRUMO-VISUAL-1_21_4-crimson-v12.jar prumo-in.jar
           echo "dependencies { modImplementation files('prumo-in.jar') }" >> build.gradle
           ./gradlew --no-daemon dependencies --configuration compileClasspath || true
           ./gradlew --no-daemon compileJava || true
