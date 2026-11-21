@@ -1,0 +1,28 @@
+name: addglass
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  go:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          set -e
+          unzip -q glass-theme-1.21.11.zip -d tmp
+          cp -r tmp/src/. src/
+          rm -rf tmp glass-theme-1.21.11.zip
+          python3 - <<'PY'
+          p = "src/main/resources/zerovisual.mixins.json"
+          s = open(p, encoding="utf-8").read()
+          if "GlassCardMixin" not in s:
+              names = ["GlassCardMixin", "GlassClickGuiMixin", "GlassColorUtilMixin", "GlassRender2DMixin", "GlassThemeMixin"]
+              add = "".join('\n\t\t"%s",' % n for n in names)
+              s = s.replace('"client": [', '"client": [' + add, 1)
+              open(p, "w", encoding="utf-8").write(s)
+          PY
+          git config user.name "bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add -A
+          git commit -m "Add Glass theme"
+          git push
