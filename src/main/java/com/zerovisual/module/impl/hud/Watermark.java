@@ -26,7 +26,7 @@ public class Watermark extends HudModule {
 
 	@Override
 	public void render(GuiGraphics ctx, float tickDelta) {
-		String first = "Zero";
+		String first = "Prumo";
 		String second = "Visual";
 		StringBuilder info = new StringBuilder();
 		if (showFps.get()) info.append("  ").append(mc.getFps()).append(" fps");
