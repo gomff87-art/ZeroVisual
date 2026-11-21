@@ -1,0 +1,42 @@
+name: extract
+on: workflow_dispatch
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 25
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Remap jar to readable names
+        working-directory: 1.21.4
+        run: |
+          chmod +x ./gradlew
+          cp ../prumo.jar prumo-in.jar
+          echo "dependencies { modImplementation files('prumo-in.jar') }" >> build.gradle
+          ./gradlew --no-daemon dependencies --configuration compileClasspath || true
+          ./gradlew --no-daemon compileJava || true
+          OUT=$(find . "$HOME/.gradle" -path '*remapped_mods*' -name '*prumo-in*.jar' | head -1)
+          echo "Remapped: $OUT"
+          test -n "$OUT"
+          mkdir -p ../work/named
+          unzip -q "$OUT" -d ../work/named
+      - name: Decompile
+        run: |
+          curl -L https://repo1.maven.org/maven2/org/vineflower/vineflower/1.10.1/vineflower-1.10.1.jar -o vf.jar
+          mkdir -p work/dec work/res
+          java -jar vf.jar work/named work/dec/
+          cp -r work/named/assets work/res/ || true
+          cp work/named/zerovisual.* work/named/fabric.mod.json work/res/ || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prumo-sources
+          path: |
+            work/dec
+            work/res
