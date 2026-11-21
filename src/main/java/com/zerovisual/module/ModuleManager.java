@@ -1,4 +1,5 @@
 package com.zerovisual.module;
+import com.zerovisual.module.impl.hud.*;
 
 import com.zerovisual.module.impl.cosmetics.Pet;
 import com.zerovisual.module.impl.cosmetics.TotemPop;
@@ -144,6 +145,21 @@ public class ModuleManager {
 		add(new PlayerView());
 		add(new Minimap());
 		add(new LowHealth());
+		add(new ClockHud());
+		add(new SessionTimer());
+		add(new FpsGraph());
+		add(new FrameStats());
+		add(new MemoryHud());
+		add(new CpuHud());
+		add(new SpeedHud());
+		add(new PingGraph());
+		add(new SelfHealth());
+		add(new SystemHud());
+		add(new DateHud());
+		add(new ChunkHud());
+		add(new NetherCoords());
+		add(new VerticalSpeed());
+		add(new VisualFps());
 
 		// Utilities
 		add(new ClickGui());
