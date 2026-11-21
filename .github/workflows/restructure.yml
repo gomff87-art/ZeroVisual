@@ -1,0 +1,22 @@
+name: restructure
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  go:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          set -e
+          test -d 1.21.11/src
+          rm -rf 1.21.11/.github
+          rm -rf 1.21.4 26.3 prumo.jar
+          cp -an 1.21.11/. .
+          rm -rf 1.21.11
+          sed -i 's/"name": "ZeroVisual"/"name": "PRUMO VISUAL"/' src/main/resources/fabric.mod.json
+          git config user.name "bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add -A
+          git commit -m "Keep only 1.21.11"
+          git push
