@@ -1,0 +1,26 @@
+name: addhud
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  go:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          set -e
+          unzip -q hud-modules-1.21.11.zip -d tmp
+          cp -r tmp/src/. src/
+          rm -rf tmp hud-modules-1.21.11.zip
+          M=src/main/java/com/zerovisual/module/ModuleManager.java
+          if ! grep -q "new ClockHud()" "$M"; then
+            sed -i '/^package /a import com.zerovisual.module.impl.hud.*;' "$M"
+            printf '%s\n' '		add(new ClockHud());' '		add(new SessionTimer());' '		add(new FpsGraph());' '		add(new FrameStats());' '		add(new MemoryHud());' '		add(new CpuHud());' '		add(new SpeedHud());' '		add(new PingGraph());' '		add(new SelfHealth());' '		add(new SystemHud());' '		add(new DateHud());' '		add(new ChunkHud());' '		add(new NetherCoords());' '		add(new VerticalSpeed());' '		add(new VisualFps());' > reg.txt
+            sed -i '/add(new LowHealth());/r reg.txt' "$M"
+            rm reg.txt
+          fi
+          git config user.name "bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add -A
+          git commit -m "Add HUD modules"
+          git push
