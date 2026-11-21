@@ -3,6 +3,11 @@
 	"package": "com.zerovisual.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
+		"GlassCardMixin",
+		"GlassClickGuiMixin",
+		"GlassColorUtilMixin",
+		"GlassRender2DMixin",
+		"GlassThemeMixin",
 		"AbstractClientPlayerEntityMixin",
 		"AbstractContainerScreenMixin",
 		"BackgroundRendererMixin",
